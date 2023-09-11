@@ -1,0 +1,13 @@
+mrr_list = []
+for i, row in predictions.iterrows():
+    relevant_item = row['next_item']
+    prediction_list = row['next_item_prediction']
+    try:
+        rank = prediction_list.index(relevant_item) + 1  # Posición del ítem relevante en la lista de predicciones
+        mrr = 1 / rank  # Calcular el MRR como el inverso de la posición del ítem relevante
+    except ValueError:
+        mrr = 0  # Si el ítem relevante no está en la lista de predicciones, asignar MRR 0
+    mrr_list.append(mrr)
+
+# Agregar la columna MRR al dataframe
+predictions['MRR'] = mrr_list
